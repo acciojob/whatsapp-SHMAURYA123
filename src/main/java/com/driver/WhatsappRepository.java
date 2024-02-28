@@ -57,37 +57,29 @@ public class WhatsappRepository {
     }
 
     public int sendMessage(Message message, User sender, Group group) throws  Exception {
-        //Throw "Group does not exist" if the mentioned group does not exist
-        //Throw "You are not allowed to send message" if the sender is not a member of the group
-        //If the message is sent successfully, return the final number of messages in that group.
 
         if(!groupUserMap.containsKey(group)){
             throw new Exception("Group does not exist");
         }
         senderMap.put(message,sender);
        List<User> userList=new ArrayList<>(groupUserMap.get(group));
-       for(User list:userList){
-           if(list.getMobile().equals(sender.getMobile())){
+       for(User list:userList) {
+           if (list.getMobile().equals(sender.getMobile())) {
                if (groupMessageMap.containsKey(group)) {
                    groupMessageMap.get(group).add(message);
                    return groupMessageMap.get(group).size();
+               } else {
+                   List<Message> messageList = new ArrayList<>();
+                   messageList.add(message);
+                   groupMessageMap.put(group, messageList);
+                   return messageList.size();
                }
-           }
-           else{
-             List<Message> messageList=new ArrayList<>();
-             messageList.add(message);
-             groupMessageMap.put(group,messageList);
-             return messageList.size();
            }
        }
        throw new Exception("You are not allowed to send message");
     }
 
     public String changeAdmin(User approver, User user, Group group) throws Exception{
-    //Throw "Group does not exist" if the mentioned group does not exist
-    //Throw "Approver does not have rights" if the approver is not the current admin of the group
-    //Throw "User is not a participant" if the user is not a part of the group
-    //Change the admin of the group to "user" and return "SUCCESS". Note that at one time there is only one admin and the admin rights are transferred from approver to user.
 
       if(!groupUserMap.containsKey(group)){
         throw new Exception("Group does not exist");
