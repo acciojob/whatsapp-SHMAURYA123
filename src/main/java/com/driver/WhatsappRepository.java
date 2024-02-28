@@ -39,12 +39,14 @@ public class WhatsappRepository {
        if(users.size()==2){
            Group group=new Group(users.get(1).getName(),2);
            adminMap.put(group,users.get(0));
+           groupUserMap.put(group,users);
            return group;
        }
        else{
-           String s="Group"+""+customGroupCount;
+           String s = "Group" + " " + customGroupCount;
            Group group=new Group(s,users.size());
            adminMap.put(group,users.get(0));
+           groupUserMap.put(group,users);
           customGroupCount++;
            return group;
        }
